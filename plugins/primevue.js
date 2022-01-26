@@ -27,7 +27,10 @@ import Password from 'primevue/password'
 import Menu from 'primevue/menu'
 import SelectButton from 'primevue/selectbutton'
 import VueSignaturePad from 'vue-signature-pad';
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
 
+Vue.component('apexchart', VueApexCharts)
 
 Vue.use(PrimeVue)
 Vue.use(ToastService)

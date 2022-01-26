@@ -2,12 +2,12 @@
   .page
       .header
         .title
-          | Peerislands Currency Convertor
+          | PeerIslands Foreign Exchange
         .link
           nuxt-link.route(to="/")
-            | Charts
+            | Dashboard
           nuxt-link.route(to="/reports")
-            | Reports
+            | History
 
       main
         nuxt-child
