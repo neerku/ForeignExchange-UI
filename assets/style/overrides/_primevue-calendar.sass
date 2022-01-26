@@ -1,0 +1,20 @@
+.p-datepicker
+  border: none
+  table td
+    padding: $s125
+    > span
+      height: 2.25rem
+      width: 2.25rem
+      border-radius: 3px
+      &.p-highlight
+        background-color: $accent
+        color: $white
+    &.p-datepicker-today
+      > span
+        background-color: $white
+        color: $primary
+        border: 2px solid $primary
+  &:not(.p-disabled)
+    table td
+      span:not(.p-highlight):not(.p-disabled):hover
+        background-color: rgba($accent, 0.1)

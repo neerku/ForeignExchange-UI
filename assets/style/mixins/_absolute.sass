@@ -1,0 +1,59 @@
+@mixin absolute($top: 0, $right: $top, $bottom: $top, $left: $right)
+  position: absolute
+  top: $top
+  right: $right
+  bottom: $bottom
+  left: $left
+  margin: auto
+
+@mixin absolute-w($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  right: auto
+
+@mixin absolute-e($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  left: auto
+
+@mixin absolute-s($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  top: auto
+
+@mixin absolute-sw($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  top: auto
+  right: auto
+
+@mixin absolute-se($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  top: auto
+  left: auto
+
+@mixin absolute-n($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  bottom: auto
+
+@mixin absolute-nw($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  bottom: auto
+  right: auto
+
+@mixin absolute-ne($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute($top, $right, $bottom, $left)
+  bottom: auto
+  left: auto
+
+@mixin absolute-nn($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute-s($top, $right, $bottom, $left)
+  bottom: 100%
+
+@mixin absolute-ss($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute-n($top, $right, $bottom, $left)
+  top: 100%
+
+@mixin absolute-ee($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute-w($top, $right, $bottom, $left)
+  left: 100%
+
+@mixin absolute-ww($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include absolute-e($top, $right, $bottom, $left)
+  right: 100%

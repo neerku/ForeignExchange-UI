@@ -1,0 +1,106 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+stages:
+  - stage: DEV
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job:
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - task: SonarQubePrepare@4
+            inputs:
+              SonarQube: 'digitalfrontdoor-sonar'
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: 'Digital_Front_Door_digitalfrontdoor-ui'
+              cliSources: '.'
+
+          - script: |
+              export NODE_ENV=dev
+              npm install
+              npm run build
+            displayName: 'Install npm and Build DEV'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
+              ArtifactName: 'drop-dev'
+              publishLocation: 'Container'
+            displayName: 'Publish DEV Build Artifact'
+
+  - stage: STG
+    dependsOn:
+      - DEV
+    condition: succeeded('DEV')
+    jobs:
+      - job:
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - task: SonarQubePrepare@4
+            inputs:
+              SonarQube: 'digitalfrontdoor-sonar'
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: 'Digital_Front_Door_digitalfrontdoor-ui'
+              cliSources: '.'
+         
+          - script: |
+              export NODE_ENV=stage
+              npm install
+              npm run build
+            displayName: 'Install npm and Build STG'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
+              ArtifactName: 'drop-stg'
+              publishLocation: 'Container'
+            displayName: 'Publish STG Build Artifact'
+
+  - stage: PROD
+    dependsOn:
+      - STG
+    condition: succeeded('STG')
+    jobs:
+      - job:
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - task: SonarQubePrepare@4
+            inputs:
+              SonarQube: 'digitalfrontdoor-sonar'
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: 'Digital_Front_Door_digitalfrontdoor-ui'
+              cliSources: '.'
+         
+          - script: |
+              export NODE_ENV=prod
+              npm install
+              npm run build
+            displayName: 'Install npm and Build PROD'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
+              ArtifactName: 'drop-prod'
+              publishLocation: 'Container'
+            displayName: 'Publish PROD Build Artifact'

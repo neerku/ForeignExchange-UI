@@ -1,0 +1,50 @@
+
+@function horizontal($h)
+  @if $h == left
+    @return flex-start
+  @else if $h == right
+    @return flex-end
+  @else if $h == fill
+    @return space-between
+  @else if $h == stretch
+    @return space-between
+  @else if $h == distribute
+    @return space-evenly
+  @else if $h == spread
+    @return space-around
+  @else
+    @return $h
+
+@function vertical($v)
+  @if $v == top
+    @return flex-start
+  @else if $v == bottom
+    @return flex-end
+  @else if $v == fill
+    @return space-between
+  @else if $v == stretch
+    @return space-between
+  @else if $v == distribute
+    @return space-evenly
+  @else if $v == spread
+    @return space-around
+  @else
+    @return $v
+
+
+@mixin flex($v: center, $h: flex-start)
+  display: flex
+  align-items: vertical($v)
+  justify-content: horizontal($h)
+
+@mixin flex-v($v: center, $h: center)
+  display: flex
+  flex-direction: column
+  align-items: vertical($h)
+  justify-content: horizontal($v)
+
+@mixin flex-fill()
+  @include flex(center, space-between)
+
+@mixin flex-distribute()
+  @include flex(center, space-around)

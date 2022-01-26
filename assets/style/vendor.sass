@@ -1,0 +1,16 @@
+@import './config'
+@import './mixins'
+
+@import './overrides/primevue'
+
+.sm
+  .p-inputtext,
+  .p-inputnumber,
+  .p-autocomplete,
+  .p-multiselect-label
+    font-size: 0.9rem
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled)
+  &.editable .p-inputswitch-slider
+    background: $success
+    border-radius: 30px

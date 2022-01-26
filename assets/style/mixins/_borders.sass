@@ -1,0 +1,23 @@
+@use 'sass:math'
+
+$border-color: $border-color !default
+
+@mixin border($level: 10)
+  border: 1px solid mix($border-color, $neutral-09, math.div(percentage(10 * $level), 100))
+  color: black
+
+@mixin border-top($level: 10)
+  @include border($level)
+  border-width: 1px 0 0
+
+@mixin border-bottom($level: 10)
+  @include border($level)
+  border-width: 0 0 1px
+
+@mixin border-left($level: 10)
+  @include border($level)
+  border-width: 0 0 0 1px
+
+@mixin border-right($level: 10)
+  @include border($level)
+  border-width: 0 1px 0 0

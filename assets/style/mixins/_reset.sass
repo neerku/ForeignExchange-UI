@@ -1,0 +1,20 @@
+=reset
+  @include reset-space
+  border-radius: 0
+  outline: none
+  list-style: none
+  border: 1px transparent solid
+  vertical-align: baseline
+  // *vertical-align: middle
+  appearance: none
+  -webkit-appearance: none
+
+=reset-space
+  margin: 0
+  padding: 0
+
+=reset-font($font-size, $font: null, $font-weight: normal)
+  *
+    font-family: $font
+    font-size: $font-size
+    font-weight: $font-weight

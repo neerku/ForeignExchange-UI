@@ -1,0 +1,318 @@
+{
+    "_id": "10110116",
+    "centerInfo": {
+        "centerId": "101",
+        "facilityName": "Buckhead South",
+        "providerName": "Piedmont",
+        "address": {
+            "address1": "2292 Peachtree Road",
+            "city": "Atlanta",
+            "state": "GA",
+            "zipcode": "30309",
+            "coordinates": [
+                33.81693,
+                -84.39041
+            ]
+        }
+    },
+    "email": null,
+    "phoneNumber": "+18989889898",
+    "createdDateTime": "2021-12-03T22:26:55.106Z",
+    "updatedDateTime": "2021-12-05T21:02:12.047Z",
+    "appointment": {
+        "date": "2021-12-03T00:00:00.000Z",
+        "startTimeInMins": 1020,
+        "endTimeInMins": 1080,
+        "slotQueue": 8
+    },
+    "reason": "Injury",
+    "currentStatusCode": "EPICSCHEDULING",
+    "currentSubStatusCode": "SLOTREQUESTED",
+    "consentToSMSNotification": true,
+    "isNewVisit": false,
+    "attendedBy": null,
+    "patientInfo": {
+        "patientId": "96476a4c-4fde-44a4-8b09-729e640f7716",
+        "firstName": "Test",
+        "lastName": "t",
+        "middleName": null,
+        "preferredName": null,
+        "dateOfBirth": "2002-02-02T00:00:00.000Z",
+        "sex": "Male",
+        "language": null,
+        "isMarried": null,
+        "ethnicity": null,
+        "race": null,
+        "preferredPharmacy": null,
+        "__typename": "PatientInfo"
+    },
+    "photoIdUri": {
+        "front": {
+            "name": null,
+            "uri": null,
+            "previewBase64": null
+        },
+        "back": {
+            "name": null,
+            "uri": null,
+            "previewBase64": null
+        }
+    },
+    "contactDetails": {
+        "phoneNumber": "+18989889898",
+        "email": "34@sd.com",
+        "address1": "asdasd",
+        "address2": null,
+        "city": "asd",
+        "state": "qwe",
+        "zipCode": "23423"
+    },
+    "primaryCare": {
+        "care": false,
+        "physician": null,
+        "phone": null
+    },
+    "emergencyContact": {
+        "name": "234",
+        "phone": "+13453453453"
+    },
+    "responsibleParty": null,
+    "priority": 100,
+    "previousPriority": null,
+    "secondaryInsuranceInfo": {
+        "isSecondaryAvailable": false,
+        "ssn": null,
+        "insuranceCompany": null,
+        "insuranceCoverageType": null,
+        "memberId": null,
+        "groupNumber": null,
+        "insuranceIdUri": {
+            "front": {
+                "name": null,
+                "uri": null,
+                "previewBase64": null,
+                "__typename": "Document"
+            },
+            "back": {
+                "name": null,
+                "uri": null,
+                "previewBase64": null,
+                "__typename": "Document"
+            },
+            "__typename": "PhotoIdUri"
+        },
+        "__typename": "SecondaryInsuranceInfo"
+    },
+    "insuranceInfo": {
+        "ssn": null,
+        "insuranceCompany": "MSK ",
+        "insuranceCoverageType": null,
+        "memberId": "1236556",
+        "groupNumber": null,
+        "insuranceIdUri": {
+            "front": {
+                "name": null,
+                "uri": null,
+                "previewBase64": null,
+                "__typename": "Document"
+            },
+            "back": {
+                "name": null,
+                "uri": null,
+                "previewBase64": null,
+                "__typename": "Document"
+            },
+            "__typename": "PhotoIdUri"
+        },
+        "secondaryInsurance": null,
+        "vaNotified": false,
+        "__typename": "InsuranceInfo"
+    },
+    "idMismatchInfo": false,
+    "insuranceMismatchInfo": false,
+    "childProxyConsent": null,
+    "registrationChecks": {
+        "identity": true,
+        "forms": false,
+        "insurance": true,
+        "medicare": false,
+        "patientDetails": true,
+        "contactDetails": true,
+        "insuranceDetails": true,
+        "insuranceHolder": false,
+        "financialResponsibility": false,
+        "condOfServAndConsentToTreat": false,
+        "patientFinancialResponsibility": false,
+        "authToReleaseInfo": false,
+        "ackOfRightsAndPrivacy": false,
+        "medicalRecordDiscloser": true,
+        "childProxyForm": false,
+        "childProxyConsent": false,
+        "__typename": "RegistrationCompletionStatus"
+    },
+    "isAttended": null,
+    "iAmHere": false,
+    "visitType": null,
+    "subscriberInfo": null,
+    "isConsentAgreed": null,
+    "workflow": [
+        {
+            "timeStamp": "2021-12-03T22:26:55.106Z",
+            "actionTakenBy": "Test,t",
+            "workflowStatusCode": "EPICSCHEDULING",
+            "workflowSubStatuscode": "SLOTREQUESTED",
+            "__typename": "Workflow"
+        }
+    ],
+    "visitAudit": [
+        {
+            "timeStamp": "2021-12-05T21:00:21.997Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "photoIdUri.front",
+                "idMismatchInfo",
+                "isPhotoIdCopyAvailable",
+                "photoIdUri.back",
+                "patientInfo.firstName",
+                "patientInfo.lastName",
+                "patientInfo.middleName",
+                "patientInfo.preferredName",
+                "patientInfo.sex",
+                "patientInfo.dateOfBirth"
+            ],
+            "__typename": "UpdateVisitAudit"
+        },
+        {
+            "timeStamp": "2021-12-05T21:01:33.616Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "photoIdUri.front",
+                "idMismatchInfo",
+                "isPhotoIdCopyAvailable",
+                "photoIdUri.back",
+                "patientInfo.firstName",
+                "patientInfo.lastName",
+                "patientInfo.middleName",
+                "patientInfo.preferredName",
+                "patientInfo.sex",
+                "patientInfo.dateOfBirth",
+                "registrationChecks.patientDetails",
+                "registrationChecks.identity"
+            ],
+            "__typename": "UpdateVisitAudit"
+        },
+        {
+            "timeStamp": "2021-12-05T21:01:54.594Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "contactDetails.phoneNumber",
+                "phoneNumber",
+                "contactDetails.email",
+                "contactDetails.address1",
+                "contactDetails.city",
+                "contactDetails.state",
+                "contactDetails.zipCode",
+                "emergencyContact.name",
+                "emergencyContact.phone",
+                "primaryCare.care",
+                "primaryCare.physician",
+                "primaryCare.phone",
+                "registrationChecks.contactDetails"
+            ],
+            "__typename": "UpdateVisitAudit"
+        },
+        {
+            "timeStamp": "2021-12-05T21:02:07.464Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "payment.type",
+                "insuranceInfo.insuranceIdUri.front",
+                "insuranceMismatchInfo",
+                "isInsuranceIdCopyAvailable",
+                "insuranceInfo.insuranceIdUri.back",
+                "insuranceInfo.insuranceCompany",
+                "insuranceInfo.insuranceCoverageType",
+                "insuranceInfo.ssn",
+                "insuranceInfo.memberId",
+                "insuranceInfo.groupNumber",
+                "secondaryInsuranceInfo.isSecondaryAvailable",
+                "secondaryInsuranceInfo.insuranceIdUri.front",
+                "secondaryInsuranceInfo.insuranceIdUri.back",
+                "secondaryInsuranceInfo.insuranceCompany",
+                "secondaryInsuranceInfo.insuranceCoverageType",
+                "secondaryInsuranceInfo.ssn",
+                "secondaryInsuranceInfo.memberId",
+                "secondaryInsuranceInfo.groupNumber",
+                "employer.employer",
+                "employer.contactName",
+                "employer.contactPhoneNumber",
+                "employer.address1",
+                "employer.address2",
+                "employer.city",
+                "employer.state",
+                "employer.zipCode",
+                "employer.reason",
+                "registrationChecks.insuranceDetails",
+                "registrationChecks.insurance",
+                "insuranceInfo.vaNotified"
+            ],
+            "__typename": "UpdateVisitAudit"
+        },
+        {
+            "timeStamp": "2021-12-05T21:02:10.382Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "medicalRecordDiscloser.relationship",
+                "medicalRecordDiscloser.relationshipOther",
+                "medicalRecordDiscloser.firstName",
+                "medicalRecordDiscloser.lastName",
+                "medicalRecordDiscloser.phoneNumber",
+                "registrationChecks.medicalRecordDiscloser"
+            ],
+            "__typename": "UpdateVisitAudit"
+        },
+        {
+            "timeStamp": "2021-12-05T21:02:12.047Z",
+            "actionTakenBy": "Test,t",
+            "field": [
+                "consentToTreat"
+            ],
+            "__typename": "UpdateVisitAudit"
+        }
+    ],
+    "notes": null,
+    "financialSignature": null,
+    "autorizationToReleaseSignature": null,
+    "payment": {
+        "_id": null,
+        "type": "Uninsured",
+        "__typename": "Payment"
+    },
+    "employer": {
+        "employer": null,
+        "contactName": null,
+        "contactPhoneNumber": null,
+        "address1": null,
+        "address2": null,
+        "city": null,
+        "state": null,
+        "zipCode": null,
+        "reason": null,
+        "__typename": "Employer"
+    },
+    "medicare": null,
+    "consentToTreat": null,
+    "rightAndPrivacy": null,
+    "consent": null,
+    "childProxyForm": null,
+    "medicalRecordDiscloser": {
+        "relationship": "None",
+        "relationshipOther": null,
+        "firstName": null,
+        "lastName": null,
+        "phoneNumber": null,
+        "__typename": "MedicalRecordDiscloser"
+    },
+    "symptoms": null,
+    "physicalForms": null
+}

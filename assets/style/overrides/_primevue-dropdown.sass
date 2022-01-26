@@ -1,0 +1,26 @@
+.p-dropdown
+  width: 100%
+  &:not(.p-disabled):hover
+    border-color: $input-border-focus
+  &:not(.p-disabled).p-focus
+    border-color: $input-border-focus
+    box-shadow: $input-box-shadow-focus
+.p-dropdown-panel
+  .p-dropdown-items
+    .p-dropdown-item.p-highlight
+      background-color: $input-selected
+      color: $input-selected-fg
+    .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover
+      background-color: $highlight
+
+.p-dropdown.dark
+  background-color: $tertiary
+  border-color: $primary
+  .p-dropdown-label.p-inputtext
+    color: $white
+  .p-dropdown-trigger
+    color: $neutral-02
+
+.p-dropdown.icon
+  .p-dropdown-label.p-inputtext
+    padding-left: 2rem

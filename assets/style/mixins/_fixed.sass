@@ -1,0 +1,43 @@
+@mixin fixed($top: 0, $right: $top, $bottom: $top, $left: $right)
+  position: fixed
+  top: $top
+  right: $right
+  bottom: $bottom
+  left: $left
+  margin: auto
+
+@mixin fixed-w($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  right: auto
+
+@mixin fixed-e($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  left: auto
+
+@mixin fixed-s($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  top: auto
+
+@mixin fixed-sw($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  top: auto
+  right: auto
+
+@mixin fixed-se($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  top: auto
+  left: auto
+
+@mixin fixed-n($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  bottom: auto
+
+@mixin fixed-nw($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  bottom: auto
+  right: auto
+
+@mixin fixed-ne($top: 0, $right: $top, $bottom: $top, $left: $right)
+  @include fixed($top, $right, $bottom, $left)
+  bottom: auto
+  left: auto

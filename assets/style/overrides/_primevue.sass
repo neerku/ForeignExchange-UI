@@ -1,0 +1,175 @@
+@import 'primevue/resources/themes/saga-blue/theme.css'
+@import 'primevue/resources/primevue.min.css'
+@import 'primeicons/primeicons.css'
+
+$input-border: $neutral-04
+$input-selected: $primary
+$input-selected-fg: $white
+$input-border-focus: $primary
+$input-box-shadow-focus: 0 0 0 0.2rem rgba($primary, 0.3)
+
+.p-component
+  font-family: $font-family
+
+.p-inputtext,
+.p-inputnumber,
+.p-autocomplete
+  width: 100%
+  font-family: $font-family
+  font-size: 1rem
+  font-weight: 600
+  +breakpoint($tablet)
+    font-size: 1.1rem
+
+
+.p-inputtext, .p-inputnumber
+  width: 100%
+  &:enabled:hover
+    border-color: $input-border-focus
+  &:enabled:focus
+    border-color: $input-border-focus
+    box-shadow: $input-box-shadow-focus
+
+.p-autocomplete
+  width: 100%
+  &.multiline
+    .p-inputtext
+      font-size: 0.9rem
+      overflow: auto
+
+.p-autocomplete-panel
+  .p-autocomplete-items
+    .p-autocomplete-item.p-highlight
+      background-color: $primary
+      color: $white
+
+.p-multiselect
+  border-color: $input-border
+  &:not(.p-disabled):hover
+    border-color: $input-border-focus
+  &:not(.p-disabled).p-focus
+    border-color: $input-border-focus
+    box-shadow: $input-box-shadow-focus
+  .pi
+    font-size: 0.8rem
+  .p-multiselect-panel
+    .p-multiselect-header
+      padding-right: 0.5rem
+      .p-multiselect-close:focus
+        box-shadow: $input-box-shadow-focus
+    .p-multiselect-items
+      .p-multiselect-item.p-highlight
+        background: $primary
+        color: $white
+      .p-multiselect-item:focus
+        box-shadow: $input-box-shadow-focus
+
+.p-checkbox
+  width: 16px
+  height: 16px
+  .p-checkbox-box
+    width: 16px
+    height: 16px
+    .p-checkbox-icon
+      font-size: 12px
+  &:not(.p-checkbox-disabled)
+    .p-checkbox-box.p-highlight,
+    .p-checkbox-box.p-highlight:hover
+      background: $input-selected
+      border-color: $input-selected
+    .p-checkbox-box:hover
+      border-color: $input-border-focus
+  &:not(.p-checkbox-disabled) .p-checkbox-box.p-focus
+    border-color: $input-border-focus
+    box-shadow: $input-box-shadow-focus
+
+.p-radiobutton
+  .p-radiobutton-box
+    // width: 16px
+    // height: 16px
+    .p-radiobutton-icon
+      // width: 10px
+      // height: 10px
+      // transform: translate(0.5px)
+    &:not(.p-disabled):not(.p-highlight):hover
+      border-color: $input-border-focus
+    &:not(.p-disabled).p-focus
+      border-color: $input-border-focus
+      box-shadow: $input-box-shadow-focus
+    &.p-highlight,
+    &.p-highlight:not(.p-disabled):hover
+      background: $input-selected-fg
+      border-color: $input-selected
+      .p-radiobutton-icon
+        background-color: $input-selected
+
+.p-toast
+  opacity: 1
+  &.p-toast-bottom-center
+    bottom: 5rem
+  .p-toast-message
+    box-shadow: none
+    &.p-toast-message-success
+      background-color: mix($success, $white, 25%)
+      border: solid $success
+      border-width: 0 0 0 7px
+      color: $neutral-10
+    .p-toast-message-content
+      .p-toast-message-icon
+        font-size: 1rem
+        margin: 0.5rem 0 0 0
+      .p-toast-message-text
+        margin: 0.5rem 0 0 1rem
+
+.p-inputswitch
+  width: 2rem
+  height: 1rem
+  .p-inputswitch-slider::before
+    width: 0.85rem
+    height: 0.85rem
+    margin-top: -0.43rem
+    left: 0.1rem
+  &.p-focus .p-inputswitch-slider
+    box-shadow: $input-box-shadow-focus
+  &.p-inputswitch-checked,
+  &.p-inputswitch-checked:not(.p-disabled):hover
+    .p-inputswitch-slider
+      background-color: $primary
+    .p-inputswitch-slider::before
+      left: -0.25rem
+
+
+.p-progress-spinner
+  .p-progress-spinner-circle
+    animation: none
+    stroke: $primary
+
+.p-dialog
+  width: 40rem
+  max-width: 98vw
+  max-height: 95vh
+  &.noscroll
+    .p-dialog-content
+      overflow-y: hidden
+  &.p-confirm-dialog
+    .p-dialog-footer
+      .p-button
+        background: $accent
+        border: 1px solid $accent
+        &:focus
+          box-shadow: $input-box-shadow-focus
+      .p-button.p-button-text
+        background: transparent
+        border: 1px solid transparent
+        color: $primary
+
+.p-overlaypanel
+  .p-overlaypanel-content
+    padding: 0
+
+@import 'primevue-dropdown'
+@import 'primevue-calendar'
+@import 'primevue-tree'
+@import 'primevue-list'
+@import 'primevue-selectbutton'
+@import 'primevue-slider'
