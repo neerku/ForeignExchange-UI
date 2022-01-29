@@ -20,6 +20,8 @@
     "sonar": "node sonar-scanner.js"
   },
   "dependencies": {
+    "@aspnet/signalr": "^1.0.27",
+    "@microsoft/signalr": "^6.0.1",
     "@mongodb-js/charts-embed-dom": "^2.1.0",
     "@nuxtjs/apollo": "^4.0.1-rc.3",
     "@nuxtjs/applicationinsights": "^1.2.2",

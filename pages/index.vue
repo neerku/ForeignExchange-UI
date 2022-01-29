@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { HubConnectionBuilder, LogLevel, } from "@aspnet/signalr";
 export default {
   layout: 'landing',
     data() {
@@ -383,8 +384,35 @@ export default {
       ],
     }
   },
+  created(){
+    this.onSlotChangeSubscriber()
+  },
 
-  methods: {
+  methods:{
+
+    onSlotChangeSubscriber() {
+    const subscription =new HubConnectionBuilder()
+    .withUrl('https://localhost:5001/chat')
+    .configureLogging(LogLevel.Information)
+    .build()
+
+    subscription.start()
+
+    subscription.on((dataa) => {
+      console.log(dataa)
+    })
+    },
+    
+    searchAddress(event) {
+      const baseURI = process.env.MAPBOX_BASE_URI
+      const token = process.env.MAPBOX_PUBLIC_KEY
+       const limit = 10
+      const url = `${baseURI}/${event.query}.json?country=us&types=address%2Cpostcode%2Cregion%2Cdistrict%2Clocality&limit=${limit}&access_token=${token}`
+      this.$axios.$get(url).then((result) => {
+        this.addressSearchlist = result.features
+      })
+    },
+
     updateChart() {
       const max = 90
       const min = 20

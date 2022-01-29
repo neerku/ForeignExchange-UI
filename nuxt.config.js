@@ -69,7 +69,6 @@ export default {
     // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
     // https://github.com/nuxt-community/apollo-module
-    '@nuxtjs/apollo',
     '@nuxtjs/applicationinsights',
     '@nuxtjs/auth-next',
     [
@@ -101,17 +100,10 @@ export default {
     instrumentationKey: process.env.APPINSIGHTS_INSTRUMENTATION_KEY
   },
 
-  mapBox:{
-    baseURI:process.env.MAPBOX_BASE_URI,
-    publicKey:process.env.MAPBOX_PUBLIC_KEY
-  },
 
-  apollo: {
-    clientConfigs: {
-      default: '~/plugins/nuxt-apollo-config.js'
-    },
-    errorHandler: '~/plugins/apollo-error-handler.js',
-  },
+ 
+
+
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
