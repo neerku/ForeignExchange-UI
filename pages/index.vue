@@ -15,7 +15,7 @@
           )
     .container-body
       .split
-      apexchart( type="candlestick" height="490" width="750" :options="chartOptions1" :series="series1")
+      apexchart( type="candlestick" height="490" width="750" :options="chartOptions1" :series="series2")
       //- .split
       //- .split
       //- .split
@@ -30,17 +30,20 @@ export default {
       currencies: ['US'],
       currency: null,
       currency2: null,
+      series2:[
+        {
+          data: []}],
       chartOptions1: {
         chart: {
           type: 'candlestick',
-          height: 290,
+          height: 490,
           id: 'candles',
           toolbar: {
             autoSelected: 'pan',
             show: true,
           },
           zoom: {
-            enabled: false,
+            enabled: true,
           },
         },
         plotOptions: {
@@ -398,9 +401,27 @@ export default {
 
     subscription.start()
 
-    subscription.on((dataa) => {
+    subscription.on('BTCToCurrencyCandle', (dataa) => {
+      this.transformData(dataa)
       console.log(dataa)
     })
+    },
+
+    transformData(data){
+      const dataArray=[]
+      data.forEach(d => {
+        if(d.candlestickId.symbol==='BTC-USD'){
+        const der={
+          
+              x: Date.parse(d.candlestickId.time),
+              y: [d.open, d.high,d.low,d.close],
+
+        }
+        dataArray.push(der)
+      }});
+      this.series2[0].data=dataArray
+      window.dispatchEvent(new Event('resize'))
+      this.$forceUpdate()
     },
     
     searchAddress(event) {
