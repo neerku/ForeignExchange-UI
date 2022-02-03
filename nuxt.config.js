@@ -70,19 +70,7 @@ export default {
     '@nuxtjs/style-resources',
     // https://github.com/nuxt-community/apollo-module
     '@nuxtjs/applicationinsights',
-    '@nuxtjs/auth-next',
-    [
-      '@nuxtjs/i18n',
-      {
-        locales: [
-          { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' },
-          { code: 'es', iso: 'es-ES', file: 'es.json', dir: 'ltr' },
-        ],
-        defaultLocale: 'en',
-        langDir: 'locales/',
-        strategy:'no_prefix'
-      },
-    ],
+    '@nuxtjs/auth-next'
   ],
 
   router: {
