@@ -395,7 +395,7 @@ export default {
 
     onSlotChangeSubscriber() {
     const subscription =new HubConnectionBuilder()
-    .withUrl('https://localhost:5001/chat')
+    .withUrl('https://peerislandsexchange.azurewebsites.net/exchange')
     .configureLogging(LogLevel.Information)
     .build()
 
