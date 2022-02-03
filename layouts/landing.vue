@@ -23,8 +23,6 @@ export default {
 @import '~/assets/style/config'
 @import '~/assets/style/mixins'
 
-$bg-landscape: 'https://www.wellstreet.com/wp-content/uploads/2021/02/piedmont-hero-mother-child-2021-1300x690-1.jpg'
-$bg-portrait: 'https://www.wellstreet.com/wp-content/uploads/2021/02/piedmon-hero-mother-child-mobile-2021.jpg'
 .page
   height: 100vh
   height: calc(var(--vh, 1vh) * 100)
