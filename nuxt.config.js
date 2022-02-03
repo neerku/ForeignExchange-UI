@@ -6,15 +6,19 @@ require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-  
-  asyncScripts:true,
+
+  asyncScripts: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Time Series| Mongo',
     meta: [
       { charset: 'utf-8' },
-      { name:"viewport", content:"initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no" },
+      {
+        name: 'viewport',
+        content:
+          'initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no',
+      },
       { hid: 'description', name: 'description', content: 'Time Series' },
       { hid: 'og:title', name: 'og:title', content: 'Time Series' },
       { hid: 'og:site_name', name: 'og:site_name', content: 'Time Series' },
@@ -54,10 +58,10 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-     // this is required to ensure the rest of Nuxt.js can access the process.env.VAR_NAME
+    // this is required to ensure the rest of Nuxt.js can access the process.env.VAR_NAME
     // '@nuxtjs/dotenv'
     // ['@nuxtjs/dotenv', { filename: `.env.${process.env.ENV_FILE}` }]
-    ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }]
+    ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -70,7 +74,7 @@ export default {
     '@nuxtjs/style-resources',
     // https://github.com/nuxt-community/apollo-module
     '@nuxtjs/applicationinsights',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
   ],
 
   router: {
@@ -85,13 +89,8 @@ export default {
   axios: {},
 
   appInsights: {
-    instrumentationKey: process.env.APPINSIGHTS_INSTRUMENTATION_KEY
+    instrumentationKey: process.env.APPINSIGHTS_INSTRUMENTATION_KEY,
   },
-
-
- 
-
-
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -105,5 +104,4 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-
 }

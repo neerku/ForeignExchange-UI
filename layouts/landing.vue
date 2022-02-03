@@ -14,9 +14,7 @@
 </template>
 
 <script>
-
-export default {
-}
+export default {}
 </script>
 
 <style lang="sass" scoped>
@@ -42,7 +40,7 @@ export default {
     color: white
     border-color: #0C1C27
     font-size: 20px
-  .link 
+  .link
      font-size: 14px
      display: flex
      justify-content: space-between
@@ -64,6 +62,4 @@ main
   margin: 0 auto
   +breakpoint($mobile-sm)
     padding:0.25rem
-
-
 </style>
