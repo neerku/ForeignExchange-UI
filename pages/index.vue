@@ -15,8 +15,8 @@
           )
     .container-body
       .split
-      apexchart( type="candlestick" height="490" width="750" :options="chartOptions1" :series="series2")
-      //- .split
+        apexchart( type="candlestick" height="490" width="750" :options="chartOptions1" :series="series2")
+      .split
       //- .split
       //- .split
 </template>
@@ -170,9 +170,10 @@ export default {
     justify-content: space-evenly
     .split
       display: flex
-      width: 47%
-      border:1px solid red
-      margin:15px
+      width: 48%
+      border: 1px solid #cccccc47
+      box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
+      margin: 15px
   .drop-down
     display: flex
     justify-content: flex-end
