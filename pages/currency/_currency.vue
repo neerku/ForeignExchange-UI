@@ -9,7 +9,7 @@
         :series='series1'
       )
       apexchart(
-        :options='option3',
+        :options='option2',
         width='700px',
         height='150px',
         :series='series2'
@@ -26,17 +26,28 @@
         height='150px',
         :series='series4'
       )
-    .split
+    .split2
         table
             tr
-                td x
-                td xvalue
+                td Currency
+                td {{this.$route.params.currency}}
             tr
-                td y
-                td xvalue
+                td Current Rate
+                td {{currentRate}}
             tr
-                td y1
-                td xvalue
+                td Maximum Rate 
+                td {{maxRate}}
+            tr
+                td Minimum Rate
+                td {{minRate}}   
+
+        apexchart(
+          :options='chartOptions',
+          width='800px',
+          height='350px',
+          :series='series',
+        )
+    
 </template>
 
 <script>
@@ -48,18 +59,68 @@ export default {
       dataPoint: ['BTC-USD', 'BTC-GBP', 'BTC-INR', 'BTC-KYD'],
       colors: ['#4caf50', '#df514d'],
       charts: [],
+      minRate: 0,
+      maxRate: 0,
+      currentRate: 0,
+      currencyValue: [],
+      series: [
+        {
+          name: 'price',
+          type: 'bar',
+          data: [],
+        },
+      ],
       subscription: null,
       currentPrice: null,
+      chartOptions: {
+        chart: {
+          height: 500,
+          type: 'line',
+          zoom: {
+            enabled: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        title: {
+          text: 'Price Trend',
+          align: 'center',
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5,
+          },
+        },
+        xaxis: {
+          data: [],
+          type: 'datetime',
+        },
+      },
       option1: {
         chart: {
           id: 'tw',
           group: 'social',
           type: 'line',
           height: 60,
+          animations: {
+            enabled: true,
+            easing: 'linear',
+            dynamicAnimation: {
+              speed: 10,
+            },
+          },
         },
-        colors: ['#546E7A'],
+        colors: ['#FF5733'],
         xaxis: {
           type: 'datetime',
+          title: {
+            text: 'EMA-10',
+          },
         },
       },
       option2: {
@@ -69,9 +130,15 @@ export default {
           type: 'line',
           height: 60,
         },
-        colors: ['#546E7A'],
+        colors: ['#FF9933'],
+        dataLabels: {
+          enabled: false,
+        },
         xaxis: {
           type: 'datetime',
+          title: {
+            text: 'EMA-5',
+          },
         },
       },
       option3: {
@@ -82,20 +149,32 @@ export default {
           height: 60,
         },
         colors: ['#546E7A'],
+        dataLabels: {
+          enabled: false,
+        },
         xaxis: {
           type: 'datetime',
+          title: {
+            text: 'Price',
+          },
         },
       },
       option4: {
         chart: {
-          id: 'tw2',
+          id: 'tw3',
           group: 'social',
           type: 'line',
           height: 60,
         },
-        colors: ['#546E7A'],
+        colors: ['#00E396'],
+        dataLabels: {
+          enabled: false,
+        },
         xaxis: {
           type: 'datetime',
+          title: {
+            text: 'SMA-10',
+          },
         },
       },
       series1: [
@@ -130,59 +209,6 @@ export default {
     this.subscription.stop()
   },
   methods: {
-    generateCharts() {
-      const options = {
-        title: {
-          text: '',
-        },
-        chart: {
-          toolbar: {
-            show: false,
-          },
-          type: 'candlestick',
-          id: 'candles',
-          brush: {
-            enabled: false,
-            target: undefined,
-            autoScaleYaxis: false,
-          },
-          redrawOnParentResize: true,
-        },
-        plotOptions: {
-          candlestick: {
-            colors: {
-              upward: '#4caf50',
-              downward: '#df514d',
-            },
-            wick: {
-              useFillColor: true,
-            },
-          },
-        },
-        xaxis: {
-          type: 'datetime',
-        },
-      }
-
-      this.dataPoint.forEach((data, index) => {
-        this.charts.push({
-          id: `chart${index}`,
-          currency: data,
-          series: [
-            {
-              data: [],
-            },
-          ],
-          options: {
-            ...options,
-            title: {
-              text: data,
-            },
-          },
-        })
-      })
-    },
-
     onSlotChangeSubscriber() {
       this.subscription = new HubConnectionBuilder()
         .withUrl(process.env.WS_BASE_URL)
@@ -192,76 +218,73 @@ export default {
       this.subscription.on('BTCToCurrencyEMA', (res) => {
         this.transformEMAData(res)
       })
-    },
-
-    transformCandleData(data) {
-      data.forEach((d) => {
-        this.charts.forEach((chart) => {
-          if (d.candlestickId.symbol === chart.currency) {
-            const record = {
-              x: Date.parse(d.candlestickId.time),
-              y: [d.open, d.high, d.low, d.close],
-            }
-            const dd = chart.series[0].data.slice(0, 49)
-            dd.push(record)
-            chart.series[0].data.push(record)
-            window.dispatchEvent(new Event('resize'))
-          }
-        })
+      this.subscription.on('currency', (res) => {
+        this.transformCurrencyData(res)
       })
-      window.dispatchEvent(new Event('resize'))
-      this.$forceUpdate()
+
+      this.subscription.on('CurrencyMinMax', (res) => {
+        this.transformCurrencyMinMaxData(res)
+      })
     },
 
     transformEMAData(data) {
       const dataArray = []
-      data.forEach((d) => {
-        if (d.candlestickId.symbol === this.$route.params.currency) {
-          const record = {
-            x: Date.parse(d.candlestickId.time),
-            y: [d.ema_10, d.ema_5, d.price, d.close],
+        data.forEach((d) => {
+          if (d.candlestickId.symbol === this.$route.params.currency) {
+            const record = {
+              x: Date.parse(d.candlestickId.time),
+              y: [d.ema_10, d.ema_5, d.price, d.close],
+            }
+            this.currentPrice = d.price
+            dataArray.push(record)
+            this.series1[0].data.push({
+              x: Date.parse(d.candlestickId.time),
+              y: d.emA_10,
+            })
+            this.series2[0].data.push({
+              x: Date.parse(d.candlestickId.time),
+              y: d.emA_5,
+            })
+            this.series3[0].data.push({
+              x: Date.parse(d.candlestickId.time),
+              y: d.price,
+            })
+            this.series4[0].data.push({
+              x: Date.parse(new Date()),
+              y: d.smA_10,
+            })
           }
-          this.currentPrice = d.price
-          dataArray.push(record)
-          this.series1[0].data.push({
-            x: Date.parse(d.candlestickId.time),
-            y: d.emA_10,
-          })
-          this.series2[0].data.push({
-            x: Date.parse(d.candlestickId.time),
-            y: d.emA_5,
-          })
-          this.series3[0].data.push({
-            x: Date.parse(d.candlestickId.time),
+        })
+        // window.dispatchEvent(new Event('resize'))
+    },
+
+    transformCurrencyData(data) {
+      const dataArray = []
+      const dataArray2 = []
+      const dataArray3 = []
+      data.forEach((d) => {
+        if (d.symbol === this.$route.params.currency) {
+          dataArray.push(d.price)
+          dataArray2.push(Date.parse(d.time))
+          dataArray3.push({
+            x: Date.parse(d.time),
             y: d.price,
           })
-          this.series4[0].data.push({
-            x: Date.parse(d.candlestickId.time),
-            y: d.smA_10,
-          })
+          this.currentRate = d.price
         }
       })
-         window.dispatchEvent(new Event('resize'))
+      this.series[0].data = dataArray3
+      window.dispatchEvent(new Event('resize'))
     },
-    updateChart() {
-      const max = 90
-      const min = 20
-      const newData = this.series[0].data.map(() => {
-        return Math.floor(Math.random() * (max - min + 1)) + min
+    transformCurrencyMinMaxData(data) {
+      data.forEach((d) => {
+        if (d.symbol === this.$route.params.currency) {
+          this.minRate = d.lowest
+          this.maxRate = d.highest
+        }
       })
 
-      const colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0']
-
-      // Make sure to update the whole options config and not just a single property to allow the Vue watch catch the change.
-      this.chartOptions = {
-        colors: [colors[Math.floor(Math.random() * colors.length)]],
-      }
-      // In the same way, update the series option
-      this.series = [
-        {
-          data: newData,
-        },
-      ]
+      window.dispatchEvent(new Event('resize'))
     },
   },
 }
@@ -293,6 +316,23 @@ export default {
         margin: 8px
         cursor: pointer
         flex-direction: column
+    .split2
+      display: flex
+      padding: 8px
+      width: 850px
+      height:  650px
+      border: 1px solid #cccccc47
+      box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
+      margin: 8px
+      cursor: pointer
+      flex-direction: column
+      table, th, td
+        border: 1px solid black
+        padding: 15px
+      table
+        border-collapse: collapse
+        width : 97%
+        margin : 15px
     .split
       display: flex
       padding: 8px
@@ -302,7 +342,7 @@ export default {
       box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
       margin: 8px
       cursor: pointer
-      table, th, td 
+      table, th, td
         border: 1px solid black
         padding: 15px
       table
