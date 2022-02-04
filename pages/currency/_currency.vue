@@ -228,15 +228,9 @@ export default {
     },
 
     transformEMAData(data) {
-      const dataArray = []
+      if (this.series1[0].data.length === 0) {
         data.forEach((d) => {
           if (d.candlestickId.symbol === this.$route.params.currency) {
-            const record = {
-              x: Date.parse(d.candlestickId.time),
-              y: [d.ema_10, d.ema_5, d.price, d.close],
-            }
-            this.currentPrice = d.price
-            dataArray.push(record)
             this.series1[0].data.push({
               x: Date.parse(d.candlestickId.time),
               y: d.emA_10,
@@ -250,12 +244,13 @@ export default {
               y: d.price,
             })
             this.series4[0].data.push({
-              x: Date.parse(new Date()),
+              x: Date.parse(d.candlestickId.time),
               y: d.smA_10,
             })
           }
         })
-        // window.dispatchEvent(new Event('resize'))
+        window.dispatchEvent(new Event('resize'))
+      }
     },
 
     transformCurrencyData(data) {
