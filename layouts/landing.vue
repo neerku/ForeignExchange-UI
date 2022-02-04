@@ -6,9 +6,6 @@
         .link
           nuxt-link.route(to="/")
             | Dashboard
-          nuxt-link.route(to="/reports")
-            | History
-
       main
         nuxt-child
 </template>

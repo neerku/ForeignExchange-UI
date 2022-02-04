@@ -1,13 +1,42 @@
 <template lang="pug">
 .container
-  .container-body
-    .split(v-for='c in charts', @click='navigate(c)')
+  .container-body 
+    .split1
       apexchart(
-        :options='c.options',
-        width='600px',
-        height='300',
-        :series='c.series'
+        :options='option1',
+        width='700px',
+        height='150px',
+        :series='series1'
       )
+      apexchart(
+        :options='option3',
+        width='700px',
+        height='150px',
+        :series='series2'
+      )
+      apexchart(
+        :options='option3',
+        width='700px',
+        height='150px',
+        :series='series3'
+      )
+      apexchart(
+        :options='option4',
+        width='700px',
+        height='150px',
+        :series='series4'
+      )
+    .split
+        table
+            tr
+                td x
+                td xvalue
+            tr
+                td y
+                td xvalue
+            tr
+                td y1
+                td xvalue
 </template>
 
 <script>
@@ -20,13 +49,82 @@ export default {
       colors: ['#4caf50', '#df514d'],
       charts: [],
       subscription: null,
+      currentPrice: null,
+      option1: {
+        chart: {
+          id: 'tw',
+          group: 'social',
+          type: 'line',
+          height: 60,
+        },
+        colors: ['#546E7A'],
+        xaxis: {
+          type: 'datetime',
+        },
+      },
+      option2: {
+        chart: {
+          id: 'tw1',
+          group: 'social',
+          type: 'line',
+          height: 60,
+        },
+        colors: ['#546E7A'],
+        xaxis: {
+          type: 'datetime',
+        },
+      },
+      option3: {
+        chart: {
+          id: 'tw3',
+          group: 'social',
+          type: 'line',
+          height: 60,
+        },
+        colors: ['#546E7A'],
+        xaxis: {
+          type: 'datetime',
+        },
+      },
+      option4: {
+        chart: {
+          id: 'tw2',
+          group: 'social',
+          type: 'line',
+          height: 60,
+        },
+        colors: ['#546E7A'],
+        xaxis: {
+          type: 'datetime',
+        },
+      },
+      series1: [
+        {
+          data: [],
+        },
+      ],
+      series2: [
+        {
+          data: [],
+        },
+      ],
+      series3: [
+        {
+          data: [],
+        },
+      ],
+      series4: [
+        {
+          data: [],
+        },
+      ],
     }
   },
   created() {
     this.onSlotChangeSubscriber()
   },
   mounted() {
-    this.generateCharts()
+    // this.generateCharts()
   },
   beforeDestroy() {
     this.subscription.stop()
@@ -80,19 +178,6 @@ export default {
             title: {
               text: data,
             },
-            // plotOptions: {
-            //   candlestick: {
-            //     colors: {
-            //       upward:
-            //         this.colors[Math.floor(Math.random() * this.colors.length)],
-            //       downward:
-            //         this.colors[Math.floor(Math.random() * this.colors.length)],
-            //     },
-            //     wick: {
-            //       useFillColor: true,
-            //     },
-            //   },
-            // },
           },
         })
       })
@@ -104,9 +189,8 @@ export default {
         .configureLogging(LogLevel.Information)
         .build()
       this.subscription.start()
-
-      this.subscription.on('BTCToCurrencyCandle', (data) => {
-        this.transformCandleData(data)
+      this.subscription.on('BTCToCurrencyEMA', (res) => {
+        this.transformEMAData(res)
       })
     },
 
@@ -118,6 +202,8 @@ export default {
               x: Date.parse(d.candlestickId.time),
               y: [d.open, d.high, d.low, d.close],
             }
+            const dd = chart.series[0].data.slice(0, 49)
+            dd.push(record)
             chart.series[0].data.push(record)
             window.dispatchEvent(new Event('resize'))
           }
@@ -130,14 +216,32 @@ export default {
     transformEMAData(data) {
       const dataArray = []
       data.forEach((d) => {
-        if (d.candlestickId.symbol === 'BTC-USD') {
+        if (d.candlestickId.symbol === this.$route.params.currency) {
           const record = {
             x: Date.parse(d.candlestickId.time),
             y: [d.ema_10, d.ema_5, d.price, d.close],
           }
+          this.currentPrice = d.price
           dataArray.push(record)
+          this.series1[0].data.push({
+            x: Date.parse(d.candlestickId.time),
+            y: d.emA_10,
+          })
+          this.series2[0].data.push({
+            x: Date.parse(d.candlestickId.time),
+            y: d.emA_5,
+          })
+          this.series3[0].data.push({
+            x: Date.parse(d.candlestickId.time),
+            y: d.price,
+          })
+          this.series4[0].data.push({
+            x: Date.parse(d.candlestickId.time),
+            y: d.smA_10,
+          })
         }
       })
+         window.dispatchEvent(new Event('resize'))
     },
     updateChart() {
       const max = 90
@@ -159,11 +263,6 @@ export default {
         },
       ]
     },
-    navigate(data) {
-      this.$router.push({
-        path: `/currency/${data.currency}`,
-      })
-    },
   },
 }
 </script>
@@ -173,30 +272,48 @@ export default {
 @import '~/assets/style/mixins'
 
 .container
-  display: flex
-  overflow-y: auto
-  padding: $s2 0
-  height: calc( 100vh - 60px )
-  flex-direction: column
-  .container-body
+    display: flex
+    overflow-y: auto
+    padding: $s2 0
+    height: calc( 100vh - 60px )
+    flex-direction: column
+.container-body
     display: flex
     flex-wrap: wrap
     width: 100%
     height: calc( 100vh - 60px )
     justify-content: space-evenly
+    .split1
+        display: flex
+        padding: 8px
+        width: 750px
+        height: 650px
+        border: 1px solid #cccccc47
+        box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
+        margin: 8px
+        cursor: pointer
+        flex-direction: column
     .split
       display: flex
       padding: 8px
       width: 650px
-      height: 350px
+      height: 200px
       border: 1px solid #cccccc47
       box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
       margin: 8px
       cursor: pointer
-  .drop-down
+      table, th, td 
+        border: 1px solid black
+        padding: 15px
+      table
+        border-collapse: collapse
+        width : 100%
+        margin : 15px
+
+.drop-down
     display: flex
     justify-content: flex-end
     .width
-      width: 250px
-      margin: 10px
+        width: 250px
+        margin: 10px
 </style>
