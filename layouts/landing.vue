@@ -2,7 +2,7 @@
   .page
       .header
         .title
-          | PeerIslands Foreign Exchange
+          | PeerIslands Voice Mongo
         .link
           nuxt-link.route(to="/")
             | Dashboard

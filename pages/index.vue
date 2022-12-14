@@ -8,16 +8,16 @@
               span Enter your Mongo Connection String
               span.red *
           .input
-            input-text(
-              v-model='mongoConnectionString'
-            )
-          span.red.small(v-if="formError && !firstName") First Name is mandatory 
+            <input-text v-model='mongoConnectionString'>
+            </input-text>
+            <button @click="validateConnection">Validate</button>
+          label(v-if='connectionSuccess')
+              i.nu.nu-globe
         <p>Welcome to VoiceMongo</p>
         <p>Message is: {{ transcript }}</p>
         <input v-model="transcript" placeholder="edit me" />
         <button :class="`mic`" @click="ToggleMic">Record</button>
         //- <div v-text="transcript"></div>
-
 </template>
 <script>
 
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       mongoConnectionString:'',
+      connectionSuccess:false,
       message:'',
       transcript :'',
       isRecording : false
@@ -66,6 +67,14 @@ export default {
   },
 
   methods: {
+
+    validateConnection(){
+      console.log(this.mongoConnectionString)
+      this.connectionSuccess=!this.connectionSuccess
+      this.mongoConnectionString=''
+      this.navigate()
+    },
+
     CheckForCommand(result) {
       const t = result[0].transcript
       if (t.includes('stop recording')) {
@@ -92,6 +101,11 @@ export default {
         this.setMicOnTime()
 
       }
+    },
+    navigate() {
+      this.$router.push({
+        path: `/store/abc`,
+      })
     },
    
   },
@@ -147,6 +161,18 @@ export default {
     input, textarea
       width: 100%
       padding: $s*0.5 $s
+    .btn
+      appearance: none
+      text-decoration: none
+      border-radius: 3px
+      cursor: pointer
+      outline: none
+      transition: .2s ease
+      font-size: 1rem
+      line-height: 1em
+      font-weight: 600
+      height: 2.5em
+      padding: 0
   .drop-down
     display: flex
     justify-content: flex-end
