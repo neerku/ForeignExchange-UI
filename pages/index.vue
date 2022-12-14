@@ -1,12 +1,23 @@
 <template lang="pug">
 .container
   .container-body
-    <div>
+    .form-content
+      .control
+        label 
+            span Enter your Mongo Connection String
+             span.red *
+        .input
+          input-text(
+            v-model='transcript'
+          )
+        span.red.small(v-if="formError && !firstName") First Name is mandatory 
+      <p>Welcome to VoiceMongo</p>
+      <p>Message is: {{ transcript }}</p>
+      <input v-model="transcript" placeholder="edit me" />
       <button :class="`mic`" @click="ToggleMic">Record</button>
-      <div v-text="transcript"></div>
-    </div>
-</template>
+      //- <div v-text="transcript"></div>
 
+</template>
 <script>
 
 
@@ -17,10 +28,7 @@ export default {
   layout: 'landing',
   data() {
     return {
-      dataPoint: ['BTC-USD', 'BTC-GBP', 'BTC-INR', 'BTC-KYD'],
-      colors: ['#4caf50', '#df514d'],
-      charts: [],
-      subscription: null,
+      message:'',
       transcript :'',
       isRecording : false
     }
@@ -103,17 +111,41 @@ export default {
     display: flex
     flex-wrap: wrap
     width: 100%
-    height: calc( 100vh - 60px )
     justify-content: space-evenly
-    .split
-      display: flex
-      padding: 8px
-      width: 650px
-      height: 350px
-      border: 1px solid #cccccc47
-      box-shadow: 0.1px 10px 15px -3px rgba(0,0,0,0.1)
-      margin: 8px
-      cursor: pointer
+
+  .form-content
+    padding: $s
+    margin: $s50
+    background-color: $white
+    +breakpoint($tablet)
+      padding: $s
+    small
+      opacity: 0.7
+
+  .card
+    margin: 0 0 $s
+    padding: 0 0 $s
+    border-bottom: 1px solid $neutral-04
+    // box-shadow: 0 2px 5px 3px rgba($primary, 0.1)
+    // padding: $s
+    &:last-child
+      border-bottom: none
+
+  .control
+    margin-bottom: $s
+    &:last-child
+      margin-bottom: 0
+    label
+      display: block
+      margin: $s50 0 $s25
+      .required::after
+        content: "*"
+        color: $accent
+        margin: $s25
+        font-weight: bold
+    input, textarea
+      width: 100%
+      padding: $s*0.5 $s
   .drop-down
     display: flex
     justify-content: flex-end

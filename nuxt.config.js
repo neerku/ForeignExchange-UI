@@ -11,7 +11,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Time Series| Mongo',
+    title: 'Mongo Search',
     meta: [
       { charset: 'utf-8' },
       {
@@ -23,16 +23,13 @@ export default {
       { hid: 'og:title', name: 'og:title', content: 'Time Series' },
       { hid: 'og:site_name', name: 'og:site_name', content: 'Time Series' },
       { hid: 'og:description', name: 'og:description', content: 'Time Series' },
-      { name: 'format-detection', content: 'telephone=no' },
-      // { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'format-detection', content: 'telephone=no' },  // Global CSS: https://go.nuxtjs.dev/config-css
+        // { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/style/vendor.sass',
-    '~/assets/style/dfd.sass',
+    '~/assets/style/client.sass',
     '~/assets/icon/nunify-icons.css',
   ],
 
@@ -40,8 +37,6 @@ export default {
   plugins: [
     { src: '~/plugins/bus.client.js' },
     { src: '~/plugins/primevue.js' },
-    { src: '~/plugins/clipboard.js' },
-    { src: '~/plugins/vue-html2pdf.js' },
   ],
 
   extendPlugins(plugins) {
