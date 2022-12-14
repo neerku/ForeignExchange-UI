@@ -1,17 +1,18 @@
 <template lang="pug">
 .container
   .container-body
-    .split(v-for='c in charts', @click='navigate(c)')
-      apexchart(
-        :options='c.options',
-        width='600px',
-        height='300',
-        :series='c.series'
-      )
+    <div>
+      <button :class="`mic`" @click="ToggleMic">Record</button>
+      <div v-text="transcript"></div>
+    </div>
 </template>
 
 <script>
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
+
+
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
+const sr = new Recognition()
+
 export default {
   layout: 'landing',
   data() {
@@ -20,118 +21,70 @@ export default {
       colors: ['#4caf50', '#df514d'],
       charts: [],
       subscription: null,
+      transcript :'',
+      isRecording : false
     }
   },
   created() {
-    this.onSlotChangeSubscriber()
+    sr.continuous = true
+    sr.interimResults = true
   },
   mounted() {
-    this.generateCharts()
-  },
-  beforeDestroy() {
-    this.subscription.stop()
-  },
-  methods: {
-    generateCharts() {
-      const options = {
-        title: {
-          text: '',
-        },
-        chart: {
-          toolbar: {
-            show: false,
-          },
-          type: 'candlestick',
-          id: 'candles',
-          brush: {
-            enabled: false,
-            target: undefined,
-            autoScaleYaxis: false,
-          },
-          redrawOnParentResize: true,
-        },
-        plotOptions: {
-          candlestick: {
-            colors: {
-              upward: '#4caf50',
-              downward: '#df514d',
-            },
-            wick: {
-              useFillColor: true,
-            },
-          },
-        },
-        xaxis: {
-          type: 'datetime',
-        },
+    sr.onstart = () => {
+      console.log('SR Started')
+      this.isRecording= true
+    }
+
+    sr.onend = () => {
+      console.log('SR Stopped')
+      this.isRecording= false
+    }
+
+    sr.onresult = (evt) => {
+      for (let i = 0; i < evt.results.length; i++) {
+        const result = evt.results[i]
+
+        if (result.isFinal) this.CheckForCommand(result)
       }
 
-      this.dataPoint.forEach((data, index) => {
-        this.charts.push({
-          id: `chart${index}`,
-          currency: data,
-          series: [
-            {
-              data: [],
-            },
-          ],
-          options: {
-            ...options,
-            title: {
-              text: data,
-            },
-          },
-        })
-      })
+      const t = Array.from(evt.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join('')
+
+      this.transcript= t
+    }
+  },
+
+  methods: {
+    CheckForCommand(result) {
+      const t = result[0].transcript
+      if (t.includes('stop recording')) {
+       sr.stop()
+      } else if (
+        t.includes('what is the time') ||
+        t.includes("what's the time")
+      ) {
+        sr.stop()
+        alert(new Date().toLocaleTimeString())
+        setTimeout(() =>  this.sr.start(), 100)
+      }
     },
 
-    onSlotChangeSubscriber() {
-      this.subscription = new HubConnectionBuilder()
-        .withUrl(process.env.WS_BASE_URL)
-        .configureLogging(LogLevel.Information)
-        .build()
-      this.subscription.start()
-
-      this.subscription.on('BTCToCurrencyCandle', (data) => {
-        this.transformCandleData(data)
-      })
+    setMicOnTime(){
+      setTimeout(()=> {sr.stop()},5000)
     },
 
-    transformCandleData(data) {
-      data.forEach((d) => {
-        this.charts.forEach((chart) => {
-          if (d.candlestickId.symbol === chart.currency) {
-            const record = {
-              x: Date.parse(d.candlestickId.time),
-              y: [d.open, d.high, d.low, d.close],
-            }
-            chart.series[0].data.push(record)
-            window.dispatchEvent(new Event('resize'))
-          }
-        })
-      })
-      window.dispatchEvent(new Event('resize'))
-      this.$forceUpdate()
-    },
+    ToggleMic() {
+      if (this.isRecording) {
+        sr.stop()
+      } else {
+        sr.start()
+        this.setMicOnTime()
 
-    transformEMAData(data) {
-      const dataArray = []
-      data.forEach((d) => {
-        if (d.candlestickId.symbol === 'BTC-USD') {
-          const record = {
-            x: Date.parse(d.candlestickId.time),
-            y: [d.ema_10, d.ema_5, d.price, d.close],
-          }
-          dataArray.push(record)
-        }
-      })
+      }
     },
-    
-    navigate(data) {
-      this.$router.push({
-        path: `/currency/${data.currency}`,
-      })
-    },
+   
   },
 }
 </script>
