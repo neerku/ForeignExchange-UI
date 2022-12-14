@@ -2,24 +2,24 @@
 .container
   .container-body
     .form-content
-      .control
-        label 
-            span Enter your Mongo Connection String
-             span.red *
-        .input
-          input-text(
-            v-model='transcript'
-          )
-        span.red.small(v-if="formError && !firstName") First Name is mandatory 
-      <p>Welcome to VoiceMongo</p>
-      <p>Message is: {{ transcript }}</p>
-      <input v-model="transcript" placeholder="edit me" />
-      <button :class="`mic`" @click="ToggleMic">Record</button>
-      //- <div v-text="transcript"></div>
+      .card
+        .control
+          label 
+              span Enter your Mongo Connection String
+              span.red *
+          .input
+            input-text(
+              v-model='mongoConnectionString'
+            )
+          span.red.small(v-if="formError && !firstName") First Name is mandatory 
+        <p>Welcome to VoiceMongo</p>
+        <p>Message is: {{ transcript }}</p>
+        <input v-model="transcript" placeholder="edit me" />
+        <button :class="`mic`" @click="ToggleMic">Record</button>
+        //- <div v-text="transcript"></div>
 
 </template>
 <script>
-
 
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const sr = new Recognition()
@@ -28,6 +28,7 @@ export default {
   layout: 'landing',
   data() {
     return {
+      mongoConnectionString:'',
       message:'',
       transcript :'',
       isRecording : false
