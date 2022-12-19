@@ -43,6 +43,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "nuxt": "^2.15.8",
+    "openai": "^3.1.0",
     "primeicons": "^4.1.0",
     "primevue": "^2.4.2",
     "realm-web": "^1.5.1",

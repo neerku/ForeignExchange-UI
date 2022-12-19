@@ -7,18 +7,26 @@
         <input v-model="transcript" placeholder="edit me" />
         <button :class="`mic`" @click="ToggleMic">Record</button>
     </div>
+    <div>
+        <p>Query Explanation</p>
+        <p>Message is: {{ chatGPTResult }}</p>
+    </div>
 </template>
 
 <script>
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const sr = new Recognition()
+const { Configuration, OpenAIApi } = require('openai')
 
 export default {
   layout: 'landing',
   data() {
     return {
-      transcript :'',
-      isRecording : false
+      transcript: '',
+      chatGPTResult: '',
+      isRecording: false,
+      chatGPTApiKey: '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',
+
     }
   },
   created() {
@@ -49,6 +57,7 @@ export default {
         .join('')
 
       this.transcript= t
+      this.getGPTResult(t)
     }
   },
 
@@ -79,6 +88,29 @@ export default {
         this.setMicOnTime()
 
       }
+    },
+
+    async getGPTResult(transcript) {
+      const configuration = new Configuration({
+        apiKey: this.chatGPTApiKey,
+      })
+      const text= `Create a Mongo request to ${transcript}`
+      const openai = new OpenAIApi(configuration)
+      const response = await openai.createCompletion({
+        model: 'text-davinci-003',
+        prompt:text,
+        temperature: 0.7,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      })
+      debugger
+      if(response.status===200){
+      this.chatGPTResult= response.data.choices[0].text}
+      else
+      this.chatGPTResult='Unable to get explanation'
+      debugger
     },
   },
 }
